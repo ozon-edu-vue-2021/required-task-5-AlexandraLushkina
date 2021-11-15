@@ -1,6 +1,5 @@
 <template>
   <div class="goods">
-    <h2>Количество товаров в корзине {{ countGoods }}</h2>
     <div v-for="good in goods" :key="good.uid">
       <card-expanded
         :img="good.img"

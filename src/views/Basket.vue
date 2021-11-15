@@ -1,21 +1,26 @@
 <template>
   <div class="container">
-    <h2>Вот ваши покупочки:</h2>
+    <h2 class="header">Вот ваши покупочки</h2>
     <div class="content">
       <div class="goods">
-        <div v-for="good in inBasket" :key="good.uid">
-          <CardSmall
-            :img="good.img"
-            :price="good.price"
-            :name="good.name"
-            :uid="good.uid"
-          />
+        <div v-if="inBasket.length">
+          <div v-for="good in inBasket" :key="good.uid">
+            <CardSmall
+              :img="good.img"
+              :price="good.price"
+              :name="good.name"
+              :uid="good.uid"
+            />
+          </div>
+        </div>
+        <div v-else>
+          <h3 class="empty-basket">Пока ничего не добавлено :(</h3>
         </div>
       </div>
       <div class="order">
         <h2>Общая стоимость корзиночки</h2>
         <h3>{{ getTotalAmount }} ₽</h3>
-        <button @click="showList">СРОЧНО КУПИТЬ</button>
+        <button class="button" @click="showList">СРОЧНО КУПИТЬ</button>
       </div>
     </div>
   </div>
@@ -42,11 +47,15 @@ export default {
       this.inBasket.forEach((item) => {
         list.push(item.name);
       });
-      alert(
-        `Ваш список покупок: ${list.toString()}, Общая сумма покупок: ${
-          this.getTotalAmount
-        }`
-      );
+      if (this.inBasket.length) {
+        alert(
+          `Ваш список покупок: ${list.toString()}, Общая сумма покупок: ${
+            this.getTotalAmount
+          }`
+        );
+      } else {
+        alert(`Ваш список покупок пока пуст, ни в чем себе не отказывайте ;)`);
+      }
     },
   },
 };
@@ -66,5 +75,18 @@ export default {
   justify-self: center;
   margin: 25px;
   margin-top: 0;
+}
+.button {
+  background-color: #e53558;
+  color: #fff;
+  cursor: pointer;
+  font-family: "GTEestiDisplay", Arial, sans-serif;
+  line-height: 1.55;
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 1px;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
 }
 </style>

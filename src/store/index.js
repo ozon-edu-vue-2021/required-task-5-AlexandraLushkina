@@ -28,5 +28,8 @@ export default new Vuex.Store({
       });
       return sum;
     },
+    allGoodsCount: (state) => {
+      return state.goods.length || 0;
+    },
   },
 });

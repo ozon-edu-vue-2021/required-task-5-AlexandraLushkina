@@ -35,8 +35,8 @@ export default {
   },
   computed: {
     shortDescription() {
-      if (this.description.length > 96) {
-        return this.description.slice(0, 96) + " ...";
+      if (this.description.length > 60) {
+        return this.description.slice(0, 60) + " ...";
       }
       return this.description;
     },
