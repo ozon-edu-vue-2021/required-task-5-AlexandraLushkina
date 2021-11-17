@@ -12,7 +12,7 @@
         <span class="nav-title">Избранное</span>
       </router-link>
       <router-link class="nav-item" to="/basket">
-        <span class="badge">{{ countGoods }}</span>
+        <span class="badge">{{ basketGoodsCount }}</span>
         <basketSVG class="basket-icon" />
         <span class="nav-title">Корзина</span>
       </router-link>
@@ -26,7 +26,7 @@ import basketSVG from "./assets/images/basket.svg";
 import boxSVG from "./assets/images/box.svg";
 import heartSVG from "./assets/images/heart.svg";
 
-import { mapGetters, mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "App",
@@ -36,8 +36,7 @@ export default {
     heartSVG,
   },
   computed: {
-    ...mapState(["countGoods"]),
-    ...mapGetters(["favouritesCount", "allGoodsCount"]),
+    ...mapGetters(["favouritesCount", "allGoodsCount", "basketGoodsCount"]),
   },
 };
 </script>

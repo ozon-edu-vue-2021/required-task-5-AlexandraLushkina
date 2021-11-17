@@ -29,7 +29,6 @@ export default {
   },
   methods: {
     onGoodAdded(options) {
-      this.$store.commit("addGoodToCounter");
       this.$store.commit("addToBasket", options);
     },
   },

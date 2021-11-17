@@ -60,7 +60,6 @@ export default {
       return Math.floor(Math.random() * 5000) + 10;
     },
     onGoodAdded(options) {
-      this.$store.commit("addGoodToCounter");
       this.$store.commit("addToBasket", options);
     },
   },
