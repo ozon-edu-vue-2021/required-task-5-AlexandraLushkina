@@ -19,6 +19,13 @@ export default new Vuex.Store({
     addToBasket: (state, payload) => {
       state.inBasket.push(payload);
     },
+    toggleFavourite: (state, payload) => {
+      const { isFavourite, uid } = payload;
+      const newGoods = [...state.goods];
+      const index = newGoods.findIndex((el) => el.uid === uid);
+      newGoods[index].isFavourite = isFavourite;
+      state.goods = newGoods;
+    },
   },
   getters: {
     totalAmount: (state) => {
@@ -30,6 +37,15 @@ export default new Vuex.Store({
     },
     allGoodsCount: (state) => {
       return state.goods.length || 0;
+    },
+    getFavourites: (state, getters) => {
+      if (getters.allGoodsCount) {
+        return state.goods.filter((good) => good.isFavourite);
+      }
+      return 0;
+    },
+    favouritesCount: (state, getters) => {
+      return getters.getFavourites.length;
     },
   },
 });

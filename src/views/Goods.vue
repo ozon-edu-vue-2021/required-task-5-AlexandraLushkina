@@ -7,6 +7,7 @@
         :name="good.dish"
         :price="good.price"
         :uid="good.uid"
+        :isFavourite="good.isFavourite"
         class="card"
         @good-added="onGoodAdded"
       />

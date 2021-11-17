@@ -1,10 +1,15 @@
 <template>
   <div id="app">
     <nav class="nav">
-      <router-link class="nav-item" to="/">
-        <span class="badge">{{ getAllGoodsCount }}</span>
+      <router-link class="nav-item" :to="{ path: '/' }">
+        <span class="badge">{{ allGoodsCount }}</span>
         <boxSVG class="box-icon" />
         <span class="nav-title">Товары</span>
+      </router-link>
+      <router-link class="nav-item" :to="{ path: '/favourite' }">
+        <span class="badge">{{ favouritesCount }}</span>
+        <heartSVG class="heart-icon" />
+        <span class="nav-title">Избранное</span>
       </router-link>
       <router-link class="nav-item" to="/basket">
         <span class="badge">{{ countGoods }}</span>
@@ -18,23 +23,21 @@
 
 <script>
 import basketSVG from "./assets/images/basket.svg";
-// import heartSVG from "./assets/images/heart.svg";
 import boxSVG from "./assets/images/box.svg";
+import heartSVG from "./assets/images/heart.svg";
 
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "App",
   components: {
     basketSVG,
     boxSVG,
-    // heartSVG,
+    heartSVG,
   },
   computed: {
-    ...mapState(["countGoods", "allGoodsCount"]),
-    getAllGoodsCount() {
-      return this.$store.getters.allGoodsCount;
-    },
+    ...mapState(["countGoods"]),
+    ...mapGetters(["favouritesCount", "allGoodsCount"]),
   },
 };
 </script>

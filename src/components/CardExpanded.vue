@@ -4,13 +4,24 @@
     <h2 class="price">{{ price }} ₽</h2>
     <h3 class="name">{{ name }}</h3>
     <p class="description">{{ shortDescription }}</p>
-    <button class="button" @click="onClick">В корзину</button>
+    <div class="controls">
+      <button class="button" @click="onClick">В корзину</button>
+      <heartFullSVG v-if="isHeartFull" @click="like(false)" class="heart" />
+      <heartSVG v-else @click="like(true)" class="heart" />
+    </div>
   </div>
 </template>
 
 <script>
+import heartSVG from "../assets/images/heart.svg";
+import heartFullSVG from "../assets/images/heartFull.svg";
+
 export default {
   name: "CardExpanded",
+  components: {
+    heartSVG,
+    heartFullSVG,
+  },
   props: {
     img: {
       type: String,
@@ -32,6 +43,15 @@ export default {
       type: String,
       default: "",
     },
+    isFavourite: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      isHeartFull: this.isFavourite,
+    };
   },
   computed: {
     shortDescription() {
@@ -49,6 +69,13 @@ export default {
         price: this.price,
         uid: this.uid,
       });
+    },
+    like(bool) {
+      this.$store.commit("toggleFavourite", {
+        isFavourite: bool,
+        uid: this.uid,
+      });
+      this.isHeartFull = bool;
     },
   },
 };
@@ -80,5 +107,15 @@ export default {
   border: none;
   border-radius: 8px;
   padding: 10px;
+}
+.controls {
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+.heart {
+  cursor: pointer;
+  margin: auto;
+  margin-left: 20px;
 }
 </style>
