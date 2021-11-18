@@ -8,7 +8,7 @@
       </router-link>
       <router-link class="nav-item" :to="{ path: '/favourite' }">
         <span class="badge">{{ favouritesCount }}</span>
-        <heartSVG class="heart-icon" />
+        <IconBase class="heart-icon" :isFull="false" />
         <span class="nav-title">Избранное</span>
       </router-link>
       <router-link class="nav-item" to="/basket">
@@ -24,7 +24,7 @@
 <script>
 import basketSVG from "./assets/images/basket.svg";
 import boxSVG from "./assets/images/box.svg";
-import heartSVG from "./assets/images/heart.svg";
+import IconBase from "./components/IconBase";
 
 import { mapGetters } from "vuex";
 
@@ -33,7 +33,7 @@ export default {
   components: {
     basketSVG,
     boxSVG,
-    heartSVG,
+    IconBase,
   },
   computed: {
     ...mapGetters(["favouritesCount", "allGoodsCount", "basketGoodsCount"]),

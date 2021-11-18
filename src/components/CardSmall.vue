@@ -15,28 +15,23 @@
           <plusSVG />
         </button>
       </div>
-      <heartFullSVG
-        v-if="checkIsFavourite(uid)"
-        @click="like(false)"
-        class="heart"
-      />
-      <heartSVG v-else @click="like(true)" class="heart" />
+      <div @click="like">
+        <IconBase class="heart" :isFull="checkIsFavourite(uid)" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import heartSVG from "../assets/images/heart.svg";
-import heartFullSVG from "../assets/images/heartFull.svg";
 import minusSVG from "../assets/images/minus.svg";
 import plusSVG from "../assets/images/plus.svg";
+import IconBase from "./IconBase";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "CardSmall",
   components: {
-    heartSVG,
-    heartFullSVG,
+    IconBase,
     minusSVG,
     plusSVG,
   },
@@ -63,12 +58,11 @@ export default {
   },
   methods: {
     ...mapActions(["changeBasketAmount", "toggleFavourite"]),
-    like(bool) {
+    like() {
       this.toggleFavourite({
-        isFavourite: bool,
+        isFavourite: !this.checkIsFavourite(this.uid),
         uid: this.uid,
       });
-      this.isHeartFull = bool;
     },
     add() {
       this.changeBasketAmount({
