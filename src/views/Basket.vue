@@ -19,7 +19,7 @@
       </div>
       <div class="order">
         <h2>Общая стоимость корзиночки</h2>
-        <h3>{{ getTotalAmount }} ₽</h3>
+        <h3>{{ totalAmount }} ₽</h3>
         <button class="button" @click="showList">СРОЧНО КУПИТЬ</button>
       </div>
     </div>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import CardSmall from "../components/CardSmall";
 
 export default {
@@ -37,9 +37,7 @@ export default {
   },
   computed: {
     ...mapState(["inBasket"]),
-    getTotalAmount() {
-      return this.$store.getters.totalAmount;
-    },
+    ...mapGetters(["totalAmount"]),
   },
   methods: {
     showList() {

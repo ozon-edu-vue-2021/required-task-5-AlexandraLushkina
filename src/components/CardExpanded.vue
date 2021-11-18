@@ -6,7 +6,7 @@
     <p class="description">{{ shortDescription }}</p>
     <div class="controls">
       <button
-        v-if="getCurrentAmountInBasket <= 0"
+        v-if="getGoodsAmountInBasket(uid) <= 0"
         class="button"
         @click="onClick"
       >
@@ -16,7 +16,7 @@
         <button class="counter" @click="subtract">
           <minusSVG />
         </button>
-        <span class="amount-text">{{ getCurrentAmountInBasket }} шт</span>
+        <span class="amount-text">{{ getGoodsAmountInBasket(uid) }} шт</span>
         <button class="counter" @click="add">
           <plusSVG />
         </button>
@@ -33,7 +33,7 @@ import heartFullSVG from "../assets/images/heartFull.svg";
 import minusSVG from "../assets/images/minus.svg";
 import plusSVG from "../assets/images/plus.svg";
 
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "CardExpanded",
@@ -82,9 +82,7 @@ export default {
       return this.description;
     },
     ...mapState(["inBasket"]),
-    getCurrentAmountInBasket() {
-      return this.$store.getters.getGoodsAmountInBasket(this.uid);
-    },
+    ...mapGetters(["getGoodsAmountInBasket"]),
   },
   methods: {
     onClick() {

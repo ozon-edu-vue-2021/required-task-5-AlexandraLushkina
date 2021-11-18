@@ -1,5 +1,5 @@
 <template>
-  <div class="card" v-if="getCurrentAmountInBasket > 0">
+  <div class="card" v-if="getGoodsAmountInBasket(uid) > 0">
     <img :src="img" class="card-image" />
     <div class="info">
       <h3 class="name">{{ name }}</h3>
@@ -10,13 +10,13 @@
         <button class="counter" @click="subtract">
           <minusSVG />
         </button>
-        <span class="amount-text">{{ getCurrentAmountInBasket }} шт</span>
+        <span class="amount-text">{{ getGoodsAmountInBasket(uid) }} шт</span>
         <button class="counter" @click="add">
           <plusSVG />
         </button>
       </div>
       <heartFullSVG
-        v-if="checkIsFavourite"
+        v-if="checkIsFavourite(uid)"
         @click="like(false)"
         class="heart"
       />
@@ -30,6 +30,7 @@ import heartSVG from "../assets/images/heart.svg";
 import heartFullSVG from "../assets/images/heartFull.svg";
 import minusSVG from "../assets/images/minus.svg";
 import plusSVG from "../assets/images/plus.svg";
+import { mapGetters } from "vuex";
 
 export default {
   name: "CardSmall",
@@ -58,12 +59,7 @@ export default {
     },
   },
   computed: {
-    getCurrentAmountInBasket() {
-      return this.$store.getters.getGoodsAmountInBasket(this.uid);
-    },
-    checkIsFavourite() {
-      return this.$store.getters.checkIsFavourite(this.uid);
-    },
+    ...mapGetters(["getGoodsAmountInBasket", "checkIsFavourite"]),
   },
   methods: {
     like(bool) {
