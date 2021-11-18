@@ -33,7 +33,7 @@ import heartFullSVG from "../assets/images/heartFull.svg";
 import minusSVG from "../assets/images/minus.svg";
 import plusSVG from "../assets/images/plus.svg";
 
-import { mapGetters, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 
 export default {
   name: "CardExpanded",
@@ -85,6 +85,7 @@ export default {
     ...mapGetters(["getGoodsAmountInBasket"]),
   },
   methods: {
+    ...mapActions(["changeBasketAmount", "toggleFavourite"]),
     onClick() {
       this.$emit("good-added", {
         name: this.name,
@@ -95,20 +96,20 @@ export default {
       });
     },
     like(bool) {
-      this.$store.commit("toggleFavourite", {
+      this.toggleFavourite({
         isFavourite: bool,
         uid: this.uid,
       });
       this.isHeartFull = bool;
     },
     add() {
-      this.$store.commit("changeBasketAmount", {
+      this.changeBasketAmount({
         uid: this.uid,
         operation: "+",
       });
     },
     subtract() {
-      this.$store.commit("changeBasketAmount", {
+      this.changeBasketAmount({
         uid: this.uid,
         operation: "-",
       });

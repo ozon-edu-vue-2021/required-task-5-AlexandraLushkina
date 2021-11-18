@@ -1,5 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import {
+  SET_GOODS_LIST,
+  ADD_TO_BASKET,
+  CHANGE_BASKET_AMOUNT,
+  TOGGLE_FAVOURITE,
+} from "./mutation-types";
 
 Vue.use(Vuex);
 
@@ -9,16 +15,30 @@ export default new Vuex.Store({
     inBasket: [],
   }),
   mutations: {
-    setGoodsList: (state, payload) => {
+    [SET_GOODS_LIST](state, payload) {
       state.goods = payload;
     },
-    addToBasket: (state, payload) => {
+    [ADD_TO_BASKET](state, payload) {
+      state.inBasket = payload;
+    },
+    [CHANGE_BASKET_AMOUNT](state, payload) {
+      state.inBasket = payload;
+    },
+    [TOGGLE_FAVOURITE]: (state, payload) => {
+      state.goods = payload;
+    },
+  },
+  actions: {
+    setGoodsList: ({ commit }, payload) => {
+      commit("SET_GOODS_LIST", payload);
+    },
+    addToBasket: ({ commit, state }, payload) => {
       const newBasket = [...state.inBasket];
       const newPayload = { ...payload, amount: 1 };
       newBasket.push(newPayload);
-      state.inBasket = newBasket;
+      commit("ADD_TO_BASKET", newBasket);
     },
-    changeBasketAmount(state, payload) {
+    changeBasketAmount: ({ commit, state }, payload) => {
       const newBasket = [...state.inBasket];
       const index = newBasket.findIndex((el) => el.uid === payload.uid);
       if (payload.operation === "+") {
@@ -29,14 +49,14 @@ export default new Vuex.Store({
       if (newBasket[index].amount <= 0) {
         newBasket.splice(index, 1);
       }
-      state.inBasket = newBasket;
+      commit("CHANGE_BASKET_AMOUNT", newBasket);
     },
-    toggleFavourite: (state, payload) => {
+    toggleFavourite: ({ commit, state }, payload) => {
       const { isFavourite, uid } = payload;
       const newGoods = [...state.goods];
       const index = newGoods.findIndex((el) => el.uid === uid);
       newGoods[index].isFavourite = isFavourite;
-      state.goods = newGoods;
+      commit("TOGGLE_FAVOURITE", newGoods);
     },
   },
   getters: {

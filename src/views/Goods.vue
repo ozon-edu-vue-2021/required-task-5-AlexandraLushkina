@@ -9,7 +9,7 @@
         :uid="good.uid"
         :isFavourite="good.isFavourite"
         class="card"
-        @good-added="onGoodAdded"
+        @good-added="addToBasket"
       />
     </div>
   </div>
@@ -18,7 +18,7 @@
 <script>
 import axios from "axios";
 import CardExpanded from "../components/CardExpanded";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "Goods",
@@ -31,7 +31,7 @@ export default {
         .get("https://random-data-api.com/api/food/random_food?size=30")
         .then((resp) => {
           const goodsWithImgPrice = this.makeGoodsList(resp.data);
-          this.$store.commit("setGoodsList", goodsWithImgPrice);
+          this.setGoodsList(goodsWithImgPrice);
         })
         .catch((err) => {
           console.error(err);
@@ -46,6 +46,7 @@ export default {
     ...mapState(["countGoods", "goods"]),
   },
   methods: {
+    ...mapActions(["addToBasket", "setGoodsList"]),
     makeGoodsList(goods) {
       goods.forEach((good) => {
         good.img = this.getRandomImage();
@@ -58,9 +59,6 @@ export default {
     },
     getRandomPrice() {
       return Math.floor(Math.random() * 5000) + 10;
-    },
-    onGoodAdded(options) {
-      this.$store.commit("addToBasket", options);
     },
   },
 };

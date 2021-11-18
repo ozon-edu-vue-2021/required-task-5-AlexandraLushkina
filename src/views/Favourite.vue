@@ -9,7 +9,7 @@
         :uid="good.uid"
         :isFavourite="good.isFavourite"
         class="card"
-        @good-added="onGoodAdded"
+        @good-added="addToBasket"
       />
     </div>
   </div>
@@ -17,7 +17,7 @@
 
 <script>
 import CardExpanded from "../components/CardExpanded";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Favourite",
@@ -28,9 +28,7 @@ export default {
     ...mapGetters(["getFavourites"]),
   },
   methods: {
-    onGoodAdded(options) {
-      this.$store.commit("addToBasket", options);
-    },
+    ...mapActions(["addToBasket"]),
   },
 };
 </script>
